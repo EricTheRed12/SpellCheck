@@ -1,0 +1,10 @@
+I am using this file to test the functionality of the spell checker
+program.
+
+It has several examples of  text to parse through.  It doesn't matter what
+the
+text says, or really how its formatted; it's meant to break the program so
+so it eventually works as intended. Too bad no one will probably ever read
+this.  Maybe I'll make it my "journal" as the project grows bigger?
+
+Only god knows and I'm too stubborn to acknowledge him.
