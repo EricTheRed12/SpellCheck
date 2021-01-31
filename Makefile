@@ -19,18 +19,19 @@ oPath = o_files
 tPath = txt_files
 xPath = exe_files
 
+
 # the build target executable:
 TARGET = $(xPath)/SpellCheck.exe
 
-OBJECTS = $(addprefix $(oPath)/, TextReader.o)
+OBJECTS = $(addprefix $(oPath)/, TextReader.o Memory.o sqlite3.o)
+HEADERS = $(addprefix $(hPath)/, TextReader.h Memory.h)
 
 buildd: $(OBJECTS) $(TARGET)
 
 build:
 
-objects: $(OBJECTS)
-
-reader: $(oPath)/TextReader.o
+sqlite3.o: sqlite/sqlite3.c
+	gcc -c -o $(oPath)/$@ $^ -lpthread -ldl
 
 clean:
 		$(RM) $(oPath)/*.o $(xPath)/*.exe
@@ -39,7 +40,7 @@ run:
 
 #rules
 $(oPath)/%.o: $(cPath)/%.cpp
-	$(CC) $(CFLAGS) $(DEBUG) -c $< -o $@
+	$(CC) $(CFLAGS) -c $<  -o $@
 
-$(xPath)/%.exe: $(cPath)/%.cpp
-	$(CC) $(CFLAGS) $(DEBUG) $< -o $@ $(OBJECTS)
+$(xPath)/%.exe: $(cPath)/%.cpp $(OBJECTS)
+	$(CC) $(CFLAGS) $(DEBUG) $< -o $@ $(OBJECTS) -lpthread -ldl
