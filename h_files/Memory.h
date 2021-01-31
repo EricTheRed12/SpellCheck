@@ -20,10 +20,10 @@ class Memory{
     Memory();
     ~Memory();
 
-    void open();
+    void open(const char* database);
     void close();
     void createTable();
-    void populate();
+    void populate(string insert);
 
 
 };

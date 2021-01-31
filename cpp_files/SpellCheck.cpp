@@ -8,13 +8,15 @@ using namespace std;
 int main() {
     cout << "Hello World!\n";
 
-    //TextReader reader("txt_files/test.txt");
+    Memory memory;
+    TextReader reader("txt_files/test.txt");
+
+    memory.open("Database/words");
+    memory.createTable();
+
+    reader.readFileByWords(memory);
     //reader.printFileName();
 
-    Memory memory;
-    memory.open();
-    memory.createTable();
-    memory.populate();
     memory.close();
 
     return 0;

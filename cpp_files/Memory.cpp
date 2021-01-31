@@ -11,18 +11,18 @@ using namespace std;
  *     argv - The row's data
  *  azColName - The column names
  */
-static int exec_callback(void* data, int argc, char** argv, char** azColName)
-{
-    int i;
-    fprintf(stderr, "%s: ", (const char*)data);
-
-    for (i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-
-    printf("\n");
-    return 0;
-}
+// static int exec_callback(void* data, int argc, char** argv, char** azColName)
+// {
+//     int i;
+//     fprintf(stderr, "%s: ", (const char*)data);
+//
+//     for (i = 0; i < argc; i++) {
+//         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+//     }
+//
+//     printf("\n");
+//     return 0;
+//}
 
 //### Class Functions
 Memory::Memory(){
@@ -33,9 +33,9 @@ Memory::~Memory(){
 
 }
 
-void Memory::open(){
+void Memory::open(const char* database){
 
-  int exit = sqlite3_open("Database/Memory.db", &DB);
+  int exit = sqlite3_open(database, &DB);
 
   if (exit) {
       cerr << "Database Failed to Open: " << sqlite3_errmsg(DB) << endl;
@@ -67,40 +67,8 @@ void Memory::createTable(){
         cout << "Table created Successfully" << endl;
 }
 
-void Memory::populate(){
-    char* messaggeError;
-    string query = "SELECT * FROM PERSON;";
+void Memory::populate(string insert){
 
-    cout << "STATE OF TABLE BEFORE INSERT" << endl;
-
-    sqlite3_exec(DB, query.c_str(), exec_callback, NULL, NULL);
-
-    string sql("INSERT INTO Word VALUES(1, 'STEVE', 'GATES', 30, 'PALO ALTO', 1000.0);"
-               "INSERT INTO Word VALUES(2, 'BILL', 'ALLEN', 20, 'SEATTLE', 300.22);"
-               "INSERT INTO Word VALUES(3, 'PAUL', 'JOBS', 24, 'SEATTLE', 9900.0);");
-
-    int exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-    if (exit != SQLITE_OK) {
-        cerr << "Error Insert" << endl;
-        sqlite3_free(messaggeError);
-    }
-    else
-        cout << "Records created Successfully!" << endl;
-
-    cout << "STATE OF TABLE AFTER INSERT" << endl;
-
-    sqlite3_exec(DB, query.c_str(), exec_callback, NULL, NULL);
-
-    sql = "DELETE FROM PERSON WHERE ID = 2;";
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError);
-    if (exit != SQLITE_OK) {
-        cerr << "Error DELETE" << endl;
-        sqlite3_free(messaggeError);
-    }
-    else
-        cout << "Record deleted Successfully!" << endl;
-
-    cout << "STATE OF TABLE AFTER DELETE OF ELEMENT" << endl;
-    sqlite3_exec(DB, query.c_str(), exec_callback, NULL, NULL);
+    cout << "Populating db with insert command:\n" << insert << endl;
 
 }
