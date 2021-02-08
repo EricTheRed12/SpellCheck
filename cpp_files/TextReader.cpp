@@ -19,7 +19,7 @@ void TextReader::readFileByWords(Memory DB){
     string word;
     string substring;
     string insert;
-    int identifier;
+    int identifier = 0;
 
     int i = 0;
     while(i < 14){//(inFile >> word){
@@ -32,10 +32,11 @@ void TextReader::readFileByWords(Memory DB){
         }
       }
       insert = DBinsert;
+      //edit these when table name changes
       insert.insert(35, to_string(substring.size()));
       insert.insert(32, "google the type of word");
       insert.insert(28, substring);
-      insert.insert(24, to_string(identifier));
+      insert.insert(25, to_string(identifier));
       DB.populate(insert);
 
       substring = "";

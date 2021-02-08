@@ -10,11 +10,11 @@ using namespace std;
 class Memory{
   private:
     sqlite3* DB;
-    string data = "CREATE TABLE Word("
-                      "ID INT PRIMARY KEY     NOT NULL, "
+    string data = "CREATE TABLE Words("
+                      "Id INT PRIMARY KEY     NOT NULL, "
                       "Word           TEXT    NOT NULL, "
-                      "TYPE          TEXT     NOT NULL, "
-                      "LENGTH            INT     NOT NULL);";
+                      "Typr          TEXT     NOT NULL, "
+                      "Length            INT     NOT NULL);";
 
   public:
     Memory();
@@ -24,6 +24,7 @@ class Memory{
     void close();
     void createTable();
     void populate(string insert);
+    void read();
 
 
 };

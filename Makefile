@@ -23,18 +23,22 @@ xPath = exe_files
 # the build target executable:
 TARGET = $(xPath)/SpellCheck.exe
 
-OBJECTS = $(addprefix $(oPath)/, TextReader.o Memory.o sqlite3.o)
+OBJECTS = $(addprefix $(oPath)/, TextReader.o Memory.o sqlite3)
 HEADERS = $(addprefix $(hPath)/, TextReader.h Memory.h)
+
+all: # keep for now
+	make clean
+	make buildd
 
 buildd: $(OBJECTS) $(TARGET)
 
 build:
 
-sqlite3.o: sqlite/sqlite3.c
-	gcc -c -o $(oPath)/$@ $^ -lpthread -ldl
+sql: sqlite/sqlite3.c
+	gcc -c -o $(oPath)/sqlite3 $^ -lpthread -ldl
 
 clean:
-		$(RM) $(oPath)/*.o $(xPath)/*.exe
+		$(RM) $(oPath)/*.o $(xPath)/*.exe *.db
 run:
 		./$(TARGET)
 

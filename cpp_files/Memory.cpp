@@ -24,6 +24,18 @@ using namespace std;
 //     return 0;
 //}
 
+int callback(void* notUsedYet, int argc, char** argv, char** colName){
+
+  cout << notUsedYet << "\n";
+
+  for (int i = 0; i < argc; i++) {
+        cout << colName[i] << " = " << argv[i] << "\n";
+    }
+
+  return 0;
+}
+
+
 //### Class Functions
 Memory::Memory(){
 
@@ -68,7 +80,34 @@ void Memory::createTable(){
 }
 
 void Memory::populate(string insert){
+    char* err_msg = 0;
+    const char* msg = insert.c_str();
 
     cout << "Populating db with insert command:\n" << insert << endl;
 
+    int exit =  sqlite3_exec(DB, msg, 0, 0, &err_msg);
+
+    if (exit != SQLITE_OK ) {
+
+        cout << "Failed to insert data, Error: " << err_msg << "\n";
+
+        sqlite3_free(err_msg);
+    }
+}
+
+void Memory::read(){
+
+  cout << "Reading data: " << "\n";
+
+  char* err_msg = 0;
+  const char* read = "SELECT ID, Word FROM Words WHERE Length = 4"; //
+
+  int exit =  sqlite3_exec(DB, read, callback, 0, &err_msg);
+
+  if (exit != SQLITE_OK ) {
+
+      cout << "Failed to read data, Error: " << err_msg << "\n";
+
+      sqlite3_free(err_msg);
+  }
 }

@@ -11,11 +11,13 @@ int main() {
     Memory memory;
     TextReader reader("txt_files/test.txt");
 
-    memory.open("Database/words");
+    memory.open("Words.db");
     memory.createTable();
 
     reader.readFileByWords(memory);
     //reader.printFileName();
+
+    memory.read();
 
     memory.close();
 
